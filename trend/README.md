@@ -1,3 +1,11 @@
+# mapMove
+百度地图JavascriptApi Marker平滑移动及车头指向行径方向,
+
+相信只要是使用百度地图做实时定位服务的朋友都会遇到这个问题,在对坐标位置进行覆盖物展示的时候,会出现由于获取坐标数据时间或者两个坐标点相距过远,导致在视觉上看Marker移动就像“僵尸跳”一样，一蹦一蹦的给客户看分分钟鄙视你到不能自已。另外如果用的是有指向性图标ICON的时候，更会引来吐槽~诶诶诶，你这小车车怎么在这个立交桥转弯的时候车头向着后面呢？怎么搞得嘛你！会不会弄啊你！
+
+参考了这位大神http://www.cnblogs.com/peixuanzhihou/p/6540086.html的思路，自己把代码进行一定的改进，哪儿有不对的的地方，希望各位指出，我也是一个百度地图新手
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +14,7 @@
 	<style type="text/css">
 		      body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;}
 	</style>
-	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=oWqkc8Y6FmbVjkfoACSf4sxDHCG9prf4"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=您的KEY"></script>
 </head>
 <body>
 	<div id="allmap"></div>
@@ -20,14 +28,10 @@
     map.enableScrollWheelZoom();
     var myP1 = new BMap.Point(116.425,39.93936);    //起点
     var myP2 = new BMap.Point(116.435,39.920);    //终点
-    var marker_1 = new BMap.Marker(myP1)
-    map.addOverlay(marker_1)
-    console.log(marker_1)
-    var myIcon = new BMap.Icon('./4.png',new BMap.Size(268,111)) //设置车辆的标志
+    var myIcon = new BMap.Icon('./car.png',new BMap.Size(32,32)) //设置车辆的标志
     var marker = new BMap.Marker(myP1,{icon:myIcon})
     map.addOverlay(marker)
-   // playLine(myP1,myP2)
-   // console.log(marker)
+    console.log(marker)
 /**
     *小车移动
     *@param {Point} prvePoint 开始坐标(PrvePoint)
@@ -108,7 +112,7 @@ var Move = function(prvePoint, newPoint, marker){
           } else {
               deg = -deg;
           }
-          deg = -20+deg
+          deg = -90+deg  //这段代码是我自己加的，只要加了deg = -90+deg 车辆的车头指向才会正确,
           console.log('不等于的时候',deg)
           console.log('起点x',curPos.x)
           console.log('起点y',curPos.y)         
@@ -130,16 +134,15 @@ var Move = function(prvePoint, newPoint, marker){
 }
 Move(myP1, myP2,marker)
 
-
-
-function playLine(start, end) {
-  var polyline = new BMap.Polyline([
-    start, end
-  ],{
-    strokeColor: '#8B4726  ',
-    strokeWeight: 3,
-    strokeOpacity: 0.5
-  })
-  map.addOverlay(polyline)
-}
 </script>
+```
+
+其中对setRotation函数中下面这段代码是我加以改进的。其实下面这段代码有点不太理解，我只有在加了deg=-90+deg后车辆的车头指向才会正确。
+
+```javascript
+ deg = -90+deg  //这段代码是我自己加的，只要加了deg = -90+deg 车辆的车头指向才会正确,
+```
+
+![GIF.gif](GIF.gif)
+
+我这个demo的起点和终点设置的比较远，可以根据需求进行自我调整
