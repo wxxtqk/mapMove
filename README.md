@@ -146,3 +146,10 @@ Move(myP1, myP2,marker)
 ![GIF.gif](GIF.gif)
 
 我这个demo的起点和终点设置的比较远，可以根据需求进行自我调整
+
+### 在百度地图上显示态势图
+
+ 在百度地图显示态势图 https://github.com/wxxtqk/mapMove/tree/master/trend
+
+
+
