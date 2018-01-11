@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+        body,
+        html,
+        #allmap {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+        }
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=oWqkc8Y6FmbVjkfoACSf4sxDHCG9prf4"></script>
+    <script src="./jquery-3.2.1.js"></script>
+</head>
+
+<body>
+    <div id="allmap"></div>
+</body>
+<!-- 地图控件 -->
+<script src="./mapController.js"></script>
+<!-- 水源数据 -->
+<script src="./data-water.js"></script>
+
+</html>
+<script type="text/javascript">
+    var center = {
+        lon: 106.281771,
+        lat: 29.276107
+    }
+    /**
+     * 一定要在实例化前先实例化地图
+     */
+    var $map = new MapController('allmap', center)
+    var cnterMarker = $map.mapCircle(500).markerIcon(center, new BMap.Icon('./point.gif', new BMap.Size(40, 40))) //画圆和事发点标记
+    $map.addClick(cnterMarker) // 给中心点添加事件
+    var waterList = $map.sourceWater(dataWater) // 展示水源
+    // 水源添加点击事件
+    waterList.forEach(element => {
+        var content = `水源的Id为${element.info.fireWaterId}`
+        $map.addClick(element.marker, content)
+    });
+
+    // // 消防线路一起点
+    var start_01 = {
+        lon: 106.270165,
+        lat: 29.286267
+    }
+    // 消防线路一到达的警戒线
+    var border = {
+        lon: 106.278645,
+        lat: 29.279573
+    }
+    // 要分配到的消防车
+    var destArr = [{
+        lon: 106.280262,
+        lat: 29.278092
+    }, {
+        lon: 106.285256,
+        lat: 29.278879
+    }, {
+        lon: 106.279974,
+        lat: 29.275367
+    }, {
+        lon: 106.278609,
+        lat: 29.273224
+    }]
+    // 第一辆车
+    var car_01 = $map.markerIcon(start_01, new BMap.Icon('./car.png', new BMap.Size(32, 32)))
+    var car_state_01 = new Move(car_01,$map)
+    car_state_01.car(start_01, border, 200000, destArr[0])
+    $map.mapLine(start_01,border)
+
+
+
+    // 消防车起点2
+    // var start_02 = {
+    //     lon: 106.288382,
+    //     lat: 29.267584
+    // }
+
+    // // 消防线路一到达的警戒线
+    // var border_02 = {
+    //     lon: 106.284466,
+    //     lat: 29.272311
+    // }
+    // // 第二辆车
+    // var car_02 = $map.markerIcon(start_02, new BMap.Icon('./car.png', new BMap.Size(32, 32)))
+
+    // var car_state_02 = new Move(car_02,$map)
+    // car_state_02.car(start_02, border_02, 10000)
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // var startPoint = new BMap.Point(start_01.lon, start_01.lat) //起点
+    // var endPoint = new BMap.Point(border.lon, border.lat); //警戒线
+    // var myIcon = new BMap.Icon('./car.png', new BMap.Size(32, 32)) //设置车辆的标志
+    // var marker = new BMap.Marker(startPoint, {
+    //     icon: myIcon
+    // })
+    // map.addOverlay(marker) // 添加小车
+
+    // //画线
+    // var polyline = new BMap.Polyline([
+    //     startPoint, endPoint
+    // ], {
+    //     strokeColor: "blue",
+    //     strokeWeight: 2,
+    //     strokeOpacity: 0.5
+    // });
+    // map.addOverlay(polyline)
+    // moveCar(startPoint, endPoint, marker, map, destArr[0])
+    // // 第二辆车
+    // setTimeout(() => {
+    //     var myIcon = new BMap.Icon('./car.png', new BMap.Size(32, 32)) //设置车辆的标志
+    //     var marker2 = new BMap.Marker(startPoint, {
+    //         icon: myIcon
+    //     })
+    //     map.addOverlay(marker2) // 添加小车
+    //     moveCar(startPoint, endPoint, marker2, map, destArr[1])
+    // }, 1000);
+    // // 第三辆车
+    // setTimeout(() => {
+    //     var myIcon = new BMap.Icon('./car.png', new BMap.Size(32, 32)) //设置车辆的标志
+    //     var marker2 = new BMap.Marker(startPoint, {
+    //         icon: myIcon
+    //     })
+    //     map.addOverlay(marker2) // 添加小车
+    //     moveCar(startPoint, endPoint, marker2, map, destArr[2])
+    // }, 2000);
+
+
+    // // 消防车起点2
+    // var start_01 = {
+    //     lon: 106.288382,
+    //     lat: 29.267584
+    // }
+
+    // // 消防线路一到达的警戒线
+    // var border = {
+    //     lon: 106.284466,
+    //     lat: 29.272311
+    // }
+    // // 第四辆车
+    // var startPoint2 = new BMap.Point(start_01.lon, start_01.lat) //起点
+    // var endPoint2 = new BMap.Point(border.lon, border.lat); //警戒线
+    // var myIcon = new BMap.Icon('./car.png', new BMap.Size(32, 32)) //设置车辆的标志
+    // var marker3 = new BMap.Marker(startPoint2, {
+    //     icon: myIcon
+    // })
+    // //画线
+    // var polyline = new BMap.Polyline([
+    //     startPoint2, endPoint2
+    // ], {
+    //     strokeColor: "blue",
+    //     strokeWeight: 2,
+    //     strokeOpacity: 0.5
+    // });
+    // map.addOverlay(marker3) // 添加小车
+    // addClick('这是第四辆车', marker3, map)
+    // map.addOverlay(polyline)
+    // moveCar(startPoint2, endPoint2, marker3, map, destArr[3])
+
+
+
+    // function showInfo(e) {
+    //     alert(e.point.lng + ", " + e.point.lat);
+    // }
+    // map.addEventListener("click", showInfo)
+</script>

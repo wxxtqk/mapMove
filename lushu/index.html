@@ -1,0 +1,115 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>百度地图 API 制作路书</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.3, user-scalable=no">
+    <meta name="description" content="百度地图 API 制作路书">
+    <meta name="keywords" content="百度 API">
+    <meta name="author" content="wg">
+    <style>
+        html,
+        body,
+        #map {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+        }
+    </style>
+    <script src="http://api.map.baidu.com/api?v=2.0&ak=oWqkc8Y6FmbVjkfoACSf4sxDHCG9prf4"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/LuShu/1.2/src/LuShu_min.js"></script>
+
+    <body>
+        <div id="map"></div>
+        <script>
+            var bmap = document.getElementById('map');
+            var map = new BMap.Map("map");
+            map.enableScrollWheelZoom(true); //开启鼠标滚轮缩放
+            var point = new BMap.Point(108.740663, 34.349856);
+            var points = [
+                new BMap.Point(108.988452, 34.392405),
+                new BMap.Point(108.945046, 34.381442),
+                new BMap.Point(108.915438, 34.372742),
+                new BMap.Point(108.844579, 34.355817),
+                new BMap.Point(108.767253, 34.34628),
+                new BMap.Point(108.740663, 34.349856),
+                new BMap.Point(108.67268, 34.336861),
+                new BMap.Point(108.571351, 34.305735),
+                new BMap.Point(108.4946, 34.296431),
+                new BMap.Point(108.418136, 34.279728)
+
+            ];
+            var markers = [
+                points[1], //西安北站
+                points[5], //咸阳站
+                points[6], //咸阳秦都站
+                points[8] //兴平站
+            ];
+            //用站点画出路线，参数：站点、线路颜色、线路宽度、透明度
+            var polyline = new BMap.Polyline(points, {
+                strokeColor: "#5298ff",
+                strokeWeight: 2,
+                strokeOpacity: 0.8
+            });
+
+            map.addOverlay(polyline); //添加轨迹到地图
+            // 第一两路书
+            var lushu = new BMapLib.LuShu(map, points, {
+                //landmarkPois:此参数是路书移动的时候碰到这个点会触发pauseTime停留中设置的时间，单位为秒，经纬度误差超过十米不会停止
+                landmarkPois: [{
+                        lng: markers[0].lng,
+                        lat: markers[0].lat,
+                        html: '<img src="xian.jpg" /></br>西安北站到了',
+                        pauseTime: 1
+                    },
+                    {
+                        lng: markers[1].lng,
+                        lat: markers[1].lat,
+                        html: '咸阳站到了',
+                        pauseTime: 1
+                    },
+                    {
+                        lng: markers[2].lng,
+                        lat: markers[2].lat,
+                        html: '咸阳秦都站到了',
+                        pauseTime: 1
+                    },
+                    {
+                        lng: markers[3].lng,
+                        lat: markers[3].lat,
+                        html: '兴平站到了',
+                        pauseTime: 1
+                    }
+                ],
+                defaultContent: '动车继续前行，况且况且...',
+                speed: 1000, //速度，单位米每秒
+                /* 1、需要把图片和代码放在同一个文件夹下面
+                 * 2、size()是设置图片大小，图片过大可以截取
+                 * 3、anchor是设置偏移，默认是图片最中间，设置偏移目的是让图片底部中间与坐标重合
+                 */
+                icon: new BMap.Icon('Fire-Truck-Right-Red-icon.png', new BMap.Size(128, 128), {
+                    anchor: new BMap.Size(24, 34)
+                }), //声明高铁标注
+                autoView: false,
+                enableRotation: false
+            });
+            map.centerAndZoom(point, 12); //设置中心点和级别（级别是1-20）数字越大越是放大
+            lushu.start();
+            //添加路书点击事件，并改变其运动速度
+            map.addEventListener('click', startlushu);
+            function startlushu(e) {
+                if (!!e.overlay) {
+                    var markerId = lushu._marker.ba;
+                    if (e.overlay.ba == markerId) {
+                        alert('你点击了高铁，速度即将变快');
+                        lushu._opts.speed = lushu._opts.speed + 2000;
+                    }
+                }
+            }
+        </script>
+
+
+    </body>
+
+</html>

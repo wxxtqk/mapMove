@@ -1,0 +1,72 @@
+var dataWater = [
+    {
+        "fireWaterId": "1",
+        "fireWaterName": null,
+        "fireWaterAddress": null,
+        "fireWaterLai": 29.277924,
+        "fireWaterLon": 106.280292,
+        "fireWaterState": null,
+        "fireWaterTypeId": "2",
+        "fireWaterTypeName": null,
+        "fireWaterHomeUnit": null,
+        "fireWaterIds": null,
+        "ext1": null,
+        "ext2": null
+    },
+    {
+        "fireWaterId": "12",
+        "fireWaterName": null,
+        "fireWaterAddress": null,
+        "fireWaterLai": 29.275412,
+        "fireWaterLon": 106.279981,
+        "fireWaterState": null,
+        "fireWaterTypeId": "2",
+        "fireWaterTypeName": null,
+        "fireWaterHomeUnit": null,
+        "fireWaterIds": null,
+        "ext1": null,
+        "ext2": null
+    },
+    {
+        "fireWaterId": "13",
+        "fireWaterName": null,
+        "fireWaterAddress": null,
+        "fireWaterLai": 29.275422,
+        "fireWaterLon": 106.279991,
+        "fireWaterState": null,
+        "fireWaterTypeId": "2",
+        "fireWaterTypeName": null,
+        "fireWaterHomeUnit": null,
+        "fireWaterIds": null,
+        "ext1": null,
+        "ext2": null
+    },
+    {
+        "fireWaterId": "14",
+        "fireWaterName": null,
+        "fireWaterAddress": null,
+        "fireWaterLai": 29.273311,
+        "fireWaterLon": 106.278621,
+        "fireWaterState": null,
+        "fireWaterTypeId": "2",
+        "fireWaterTypeName": null,
+        "fireWaterHomeUnit": null,
+        "fireWaterIds": null,
+        "ext1": null,
+        "ext2": null
+    },
+    {
+        "fireWaterId": "15",
+        "fireWaterName": null,
+        "fireWaterAddress": null,
+        "fireWaterLai": 29.278813,
+        "fireWaterLon": 106.285511,
+        "fireWaterState": null,
+        "fireWaterTypeId": "2",
+        "fireWaterTypeName": null,
+        "fireWaterHomeUnit": null,
+        "fireWaterIds": null,
+        "ext1": null,
+        "ext2": null
+    }
+]
